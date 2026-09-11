@@ -3,7 +3,7 @@
 // @namespace    https://jeremyredkey.github.io/webdev-command-center
 // @version      0.5.0
 // @description  Senior web developer audit toolkit: inspect, WCAG/ADA/California standards, links, responsive device lab, performance, semantics, security heuristics, capture, annotations, campaign intelligence, and design research.
-// @author       Jeremy Redkey
+// @author       Jeremy Redkey / Redkey Web Design
 // @homepageURL  https://jeremyredkey.github.io/webdev-command-center/
 // @downloadURL  https://jeremyredkey.github.io/webdev-command-center/webdev-command-center.user.js
 // @updateURL    https://jeremyredkey.github.io/webdev-command-center/webdev-command-center.user.js

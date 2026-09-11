@@ -3,83 +3,168 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WebDev Command Center — Senior audit toolkit</title>
-  <meta name="description" content="A Tampermonkey toolkit for inspect, WCAG/ADA and California web-standards review, broken-link checks, responsive comparison, capture, annotations, and optional AI research.">
+  <title>WebDev Command Center — Redkey Web Design</title>
+  <meta name="description" content="A Redkey Web Design command deck for live-page inspect, WCAG/ADA and California standards review, link checks, responsive comparison, capture, and optional AI research.">
   <link rel="canonical" href="https://jeremyredkey.github.io/webdev-command-center/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#0f141a">
-  <meta property="og:title" content="WebDev Command Center">
-  <meta property="og:description" content="Inspect, audit, and review any page from a floating Tampermonkey panel.">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta name="theme-color" content="#08090b">
+  <meta property="og:title" content="WebDev Command Center — Redkey Web Design">
+  <meta property="og:description" content="All signals on the live page. One command deck from Redkey Web Design.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jeremyredkey.github.io/webdev-command-center/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b1015;
-      --panel: #171e27;
-      --panel2: #202a35;
-      --text: #f5f7fa;
-      --muted: #a6b1be;
-      --border: #344150;
-      --accent: #69b7ff;
-      --good: #5ddd93;
-      --warn: #ffd06a;
-      --bad: #ff7b7b;
+      --bg: #08090b;
+      --panel: #101216;
+      --panel2: #16181d;
+      --text: #f4f1ec;
+      --muted: #9a958c;
+      --line: rgba(244, 241, 236, .12);
+      --red: hsl(355 82% 51%);
+      --red-ink: hsl(355 80% 36%);
+      --good: #3dca7a;
+      --warn: #e6b84d;
+      --bad: #ff6b6b;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: Inter, ui-sans-serif, system-ui, sans-serif;
+      --display: Outfit, Inter, sans-serif;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       color: var(--text);
-      background:
-        radial-gradient(900px 480px at 12% -10%, rgba(105, 183, 255, .16), transparent 55%),
-        radial-gradient(700px 420px at 100% 8%, rgba(93, 221, 147, .08), transparent 50%),
-        var(--bg);
-      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font: 16px/1.5 var(--sans);
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(232, 28, 45, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 28, 45, .045) 1px, transparent 1px),
+        radial-gradient(900px 420px at 8% -8%, rgba(232, 28, 45, .16), transparent 50%);
+      background-size: 56px 56px, 56px 56px, auto;
     }
-    a { color: var(--accent); }
-    a:hover { color: #9ed0ff; }
+    a { color: var(--red); }
+    a:hover { color: #ff5a68; }
     .skip {
       position: absolute;
       left: 12px;
-      top: -40px;
+      top: -48px;
       padding: 8px 12px;
-      background: var(--accent);
-      color: #0b1015;
-      border-radius: 8px;
+      background: var(--red);
+      color: #fff;
       font-weight: 700;
-      z-index: 10;
+      z-index: 20;
     }
     .skip:focus { top: 12px; }
-    .wrap { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
-    header {
+    .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+    .status {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 18px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font: 500 11px/1.3 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .status a { color: inherit; text-decoration: none; }
+    .status a:hover { color: var(--text); }
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text);
+    }
+    .live i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 0 rgba(232, 28, 45, .7);
+      animation: pulse 1.8s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(232, 28, 45, .55); }
+      70% { box-shadow: 0 0 0 8px rgba(232, 28, 45, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(232, 28, 45, 0); }
+    }
+    .status .sep { opacity: .4; }
+
+    header.deck {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       padding: 18px 0 8px;
     }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; text-decoration: none; color: inherit; }
-    .brand img { width: 32px; height: 32px; }
-    nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+    .brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      flex: 0 0 auto;
+    }
+    .brand-lockup { min-width: 0; }
+    .brand-name {
+      font: 800 1.05rem/1 var(--display);
+      letter-spacing: -.02em;
+    }
+    .brand-sub {
+      margin-top: 4px;
+      font: 500 10px/1.2 var(--mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font: 500 12px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
     nav a { color: var(--muted); text-decoration: none; }
-    nav a:hover { color: var(--text); }
+    nav a:hover, nav a[aria-current] { color: var(--text); }
+
     .hero {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 36px;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 40px;
       align-items: center;
-      padding: 36px 0 20px;
+      padding: 36px 0 12px;
     }
     .kicker {
-      color: var(--muted);
+      margin: 0 0 12px;
+      font: 500 12px/1.4 var(--mono);
+      letter-spacing: .12em;
       text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: 12px;
-      font-weight: 750;
-      margin: 0 0 10px;
+      color: var(--red);
     }
-    h1 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.15; margin: 0 0 14px; }
-    .lede { color: #d5dde6; font-size: 1.08rem; margin: 0 0 22px; max-width: 38rem; }
+    h1 {
+      font: 800 clamp(2.2rem, 5vw, 4rem)/.95 var(--display);
+      letter-spacing: -.04em;
+      margin: 0 0 16px;
+    }
+    .lede {
+      color: #d8d2c8;
+      font-size: 1.06rem;
+      margin: 0 0 22px;
+      max-width: 38rem;
+    }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
       display: inline-flex;
@@ -87,59 +172,74 @@
       justify-content: center;
       min-height: 44px;
       padding: 10px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       text-decoration: none;
-      font-weight: 700;
+      font: 700 13px/1 var(--display);
+      letter-spacing: .04em;
+      text-transform: uppercase;
     }
-    .btn-primary { background: #173452; border-color: #4d9ee8; color: #fff; }
-    .btn-primary:hover { color: #fff; background: #1d4266; }
-    .btn-ghost { background: var(--panel2); color: var(--text); }
-    .btn-ghost:hover { color: var(--text); border-color: #627489; }
-    .note { color: var(--muted); font-size: 13px; margin: 12px 0 0; }
-    .panel-preview {
-      background: #0f141a;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 22px 60px rgba(0, 0, 0, .4);
-      overflow: hidden;
+    .btn-primary { background: var(--red); border-color: var(--red); color: #fff; }
+    .btn-primary:hover { color: #fff; background: hsl(355 82% 44%); }
+    .btn-ghost { background: transparent; color: var(--text); }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(244, 241, 236, .35); }
+    .note { color: var(--muted); font-size: 13px; margin: 14px 0 0; }
+    .studio-link { color: var(--text); }
+
+    .console {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+      position: relative;
     }
-    .panel-head {
+    .console::before,
+    .console::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--red);
+    }
+    .console::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+    .console::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+    .console-head {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 12px;
-      background: linear-gradient(180deg, #1c2631, #141b23);
-      border-bottom: 1px solid var(--border);
-      font-weight: 750;
+      border-bottom: 1px solid var(--line);
+      font: 500 11px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
-    .ver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
-    .tabs { display: flex; background: #10161d; border-bottom: 1px solid var(--border); }
+    .console-head b { font: 700 13px/1 var(--display); letter-spacing: 0; text-transform: none; }
+    .ver { margin-left: auto; color: var(--muted); }
+    .tabs { display: flex; border-bottom: 1px solid var(--line); }
     .tabs span {
-      padding: 8px 11px;
+      padding: 8px 12px;
       color: var(--muted);
-      border-right: 1px solid #26313d;
-      font-size: 13px;
+      border-right: 1px solid var(--line);
+      font: 500 11px/1 var(--mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
-    .tabs span.active { color: #fff; background: #1d2732; box-shadow: inset 0 -2px 0 var(--accent); }
-    .panel-body { padding: 14px; display: grid; gap: 10px; }
+    .tabs span.active { color: var(--text); box-shadow: inset 0 -2px 0 var(--red); }
+    .console-body { padding: 14px; display: grid; gap: 10px; }
     .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .stat {
-      background: #111820;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--panel2);
+      border: 1px solid var(--line);
       padding: 8px;
       text-align: center;
     }
-    .stat strong { display: block; font-size: 18px; }
-    .stat span { color: var(--muted); font-size: 11px; }
+    .stat strong { display: block; font: 800 18px/1.1 var(--display); }
+    .stat span { color: var(--muted); font: 500 10px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
     .chip {
       display: inline-flex;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 2px 8px;
-      font-size: 11px;
-      font-weight: 750;
+      border: 1px solid var(--line);
+      padding: 2px 7px;
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
     .chip.bad { color: var(--bad); border-color: #7c4046; }
     .chip.warn { color: var(--warn); border-color: #766034; }
@@ -148,14 +248,25 @@
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #121920;
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      background: #0c0d11;
       font-size: 13px;
     }
-    section { padding: 42px 0; }
-    h2 { font-size: 1.7rem; margin: 0 0 8px; }
+
+    section { padding: 48px 0; }
+    .section-kicker {
+      margin: 0 0 8px;
+      font: 500 12px/1 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    h2 {
+      font: 800 2rem/1 var(--display);
+      letter-spacing: -.03em;
+      margin: 0 0 8px;
+    }
     .section-lead { color: var(--muted); margin: 0 0 22px; max-width: 46rem; }
     .grid {
       display: grid;
@@ -164,75 +275,131 @@
     }
     .card {
       background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 1px solid var(--line);
       padding: 16px;
     }
-    .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
-    .card p { margin: 0; color: #c9d2dc; font-size: .95rem; }
-    ol.steps { margin: 0; padding-left: 1.2rem; display: grid; gap: 10px; }
-    pre, code {
-      font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    .card .code {
+      margin: 0 0 8px;
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--red);
     }
+    .card h3 {
+      margin: 0 0 8px;
+      font: 700 1.05rem/1.2 var(--display);
+    }
+    .card p { margin: 0; color: #cfc8be; font-size: .95rem; }
+
+    ol.steps { margin: 0; padding-left: 1.2rem; display: grid; gap: 10px; }
+    pre, code { font: 13px/1.45 var(--mono); }
     pre {
       overflow: auto;
-      background: #0e141a;
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: #0c0d11;
+      border: 1px solid var(--line);
       padding: 12px;
     }
-    .limits li { margin: 0 0 8px; color: #c9d2dc; }
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 22px 0 36px;
+    .limits { padding-left: 1.15rem; }
+    .limits li { margin: 0 0 8px; color: #cfc8be; }
+
+    footer.deck {
+      border-top: 1px solid var(--line);
+      padding: 22px 0 40px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px 24px;
+      align-items: center;
       color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      font-size: 14px;
     }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .footer-brand img { width: 36px; height: 36px; border-radius: 8px; }
+    .footer-brand strong {
+      display: block;
+      font: 700 14px/1.1 var(--display);
+    }
+    .footer-brand span {
+      display: block;
+      margin-top: 3px;
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .footer-meta { justify-self: end; text-align: right; }
+    .footer-meta a { color: var(--muted); text-decoration: none; }
+    .footer-meta a:hover { color: var(--text); }
+
     @media (max-width: 860px) {
-      .hero, .grid { grid-template-columns: 1fr; }
+      .hero, .grid, footer.deck { grid-template-columns: 1fr; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .footer-meta { text-align: left; justify-self: start; }
     }
   </style>
 </head>
 <body>
   <a class="skip" href="#install">Skip to install</a>
   <div class="wrap">
-    <header>
+    <div class="status" aria-label="System status">
+      <span class="live"><i></i> Live</span>
+      <span>Station WCC</span>
+      <span class="sep">/</span>
+      <span>v0.5.0</span>
+      <span class="sep">/</span>
+      <span>Axe-core 4.13</span>
+      <span class="sep">/</span>
+      <time id="clock" datetime="">--:--:--Z</time>
+      <span class="sep">/</span>
+      <a href="https://redkeyweb.design">Redkeyweb.design</a>
+    </div>
+
+    <header class="deck">
       <a class="brand" href="./">
-        <img src="favicon.svg" alt="">
-        WebDev Command Center
+        <img src="brand/mark.png" width="48" height="48" alt="">
+        <span class="brand-lockup">
+          <span class="brand-name">Command Center</span>
+          <span class="brand-sub">WebDev · Redkey Web Design</span>
+        </span>
       </a>
       <nav aria-label="Page">
-        <a href="#features">Features</a>
+        <a href="#systems">Systems</a>
         <a href="#install">Install</a>
-        <a href="#ai">AI bridge</a>
+        <a href="#uplink">Uplink</a>
         <a href="https://github.com/jeremyredkey/webdev-command-center">Source</a>
+        <a href="https://redkeyweb.design">Studio</a>
       </nav>
     </header>
 
     <div class="hero">
       <div>
-        <p class="kicker">Tampermonkey · v0.5</p>
-        <h1>Audit any page without leaving the page.</h1>
-        <p class="lede">Inspect, accessibility review, California web-standards checks, broken links, responsive comparison, capture, annotations, and optional AI research — from one floating panel.</p>
+        <p class="kicker">01 / Briefing</p>
+        <h1>All signals.<br>One command deck.</h1>
+        <p class="lede">Inspect, accessibility, California web standards, broken links, responsive comparison, capture, and optional AI research — from a floating console on the page you are reviewing.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="webdev-command-center.user.js">Install with Tampermonkey</a>
-          <a class="btn btn-ghost" href="https://github.com/jeremyredkey/webdev-command-center">View source</a>
+          <a class="btn btn-primary" href="webdev-command-center.user.js">Bring online</a>
+          <a class="btn btn-ghost" href="https://redkeyweb.design">Redkey Web Design</a>
         </div>
-        <p class="note">Requires Tampermonkey. The script runs on the page you are reviewing. No API keys are stored in this repo.</p>
+        <p class="note">A Tampermonkey station from <a class="studio-link" href="https://redkeyweb.design">Redkey Web Design</a>. No API keys are stored in this repo.</p>
       </div>
-      <aside class="panel-preview" aria-hidden="true">
-        <div class="panel-head">WebDev Command Center <span class="ver">v0.5.0</span></div>
+      <aside class="console" aria-hidden="true">
+        <div class="console-head">
+          <span class="live"><i></i></span>
+          <b>WebDev Command Center</b>
+          <span class="ver">Deck v0.5.0</span>
+        </div>
         <div class="tabs">
           <span class="active">Audit</span>
           <span>Links</span>
           <span>Responsive</span>
           <span>Review</span>
         </div>
-        <div class="panel-body">
+        <div class="console-body">
           <div class="stat-row">
             <div class="stat"><strong>12</strong><span>Serious</span></div>
             <div class="stat"><strong>7</strong><span>Moderate</span></div>
@@ -246,31 +413,38 @@
       </aside>
     </div>
 
-    <section id="features">
-      <h2>What it does</h2>
-      <p class="section-lead">Built for senior web developers, designers, content teams, and QA reviewers who need evidence on the live page — not another detached scanner.</p>
+    <section id="systems">
+      <p class="section-kicker">02 / Systems</p>
+      <h2>What is on the deck</h2>
+      <p class="section-lead">Built by <a href="https://redkeyweb.design">Redkey Web Design</a> for senior web developers, designers, content teams, and QA reviewers who need evidence on the live page — not another detached scanner.</p>
       <div class="grid">
         <article class="card">
+          <p class="code">SYS-01 Inspect</p>
           <h3>Inspect &amp; visual QA</h3>
           <p>Element picker, computed type, contrast, box model, DOM outline, EyeDropper, temporary text edits, and visual stress tests.</p>
         </article>
         <article class="card">
+          <p class="code">SYS-02 Access</p>
           <h3>Accessibility / ADA / WCAG</h3>
           <p>axe-core plus supplemental checks. Title II / WCAG 2.1 AA baseline, or a stricter WCAG 2.2 + California forward-looking profile.</p>
         </article>
         <article class="card">
+          <p class="code">SYS-03 California</p>
           <h3>California web standards</h3>
           <p>Maps evidence to the nine design principles. State-only ca.gov checks stay off unless the hostname actually is a state site.</p>
         </article>
         <article class="card">
+          <p class="code">SYS-04 Links</p>
           <h3>Broken Link Identifier</h3>
           <p>On-demand scan of same-page fragments and up to 300 HTTP(S) links, with broken, blocked, timeout, and unverified buckets.</p>
         </article>
         <article class="card">
+          <p class="code">SYS-05 Lab</p>
           <h3>Responsive Device Lab</h3>
           <p>Side-by-side iframe viewports from small phone through wide desktop, with optional synchronized scrolling.</p>
         </article>
         <article class="card">
+          <p class="code">SYS-06 Capture</p>
           <h3>Capture &amp; campaign notes</h3>
           <p>Full-page PNG, print/PDF, annotation pins, Markdown export, JSON evidence dump, and heuristic campaign analysis.</p>
         </article>
@@ -278,17 +452,19 @@
     </section>
 
     <section id="install">
-      <h2>Install</h2>
+      <p class="section-kicker">03 / Install</p>
+      <h2>Bring the station online</h2>
       <p class="section-lead">One click after Tampermonkey is installed. Updates come from this GitHub Pages URL.</p>
       <ol class="steps">
         <li>Install <a href="https://www.tampermonkey.net/">Tampermonkey</a> for your browser.</li>
         <li>Open <a href="webdev-command-center.user.js">webdev-command-center.user.js</a> and confirm the install prompt.</li>
-        <li>Visit any http or https page. Use the floating panel in the lower-right corner.</li>
+        <li>Visit any http or https page. Use the floating console in the lower-right corner.</li>
       </ol>
       <p class="note">The Tampermonkey menu also includes Toggle, Run full audit, Open Responsive Lab, and Clear annotations.</p>
     </section>
 
-    <section id="ai">
+    <section id="uplink">
+      <p class="section-kicker">04 / Uplink</p>
       <h2>Optional AI bridge</h2>
       <p class="section-lead"><code>webdev-ai-bridge.mjs</code> keeps the OpenAI key on your machine. Node.js 20+ only — no npm packages.</p>
       <pre><code>OPENAI_API_KEY="YOUR_KEY" node webdev-ai-bridge.mjs</code></pre>
@@ -296,7 +472,8 @@
     </section>
 
     <section id="limits">
-      <h2>Limitations</h2>
+      <p class="section-kicker">05 / Constraints</p>
+      <h2>Known limits</h2>
       <ul class="limits">
         <li>Automated scans are evidence, not proof of ADA or WCAG compliance.</li>
         <li>California requirements vary by entity. State-only rules are not treated as failures on city, county, or private sites.</li>
@@ -305,10 +482,30 @@
       </ul>
     </section>
 
-    <footer>
-      <span>WebDev Command Center v0.5 · Jeremy Redkey</span>
-      <a href="https://github.com/jeremyredkey/webdev-command-center">github.com/jeremyredkey/webdev-command-center</a>
+    <footer class="deck">
+      <a class="footer-brand" href="https://redkeyweb.design">
+        <img src="brand/mark.png" width="36" height="36" alt="">
+        <span>
+          <strong>Redkey Web Design</strong>
+          <span>redkeyweb.design</span>
+        </span>
+      </a>
+      <p>WebDev Command Center is a live-page audit station from Redkey Web Design — custom web development, technical SEO, AI automation, and government Drupal.</p>
+      <p class="footer-meta">
+        v0.5 · <a href="https://github.com/jeremyredkey/webdev-command-center">Source</a><br>
+        <a href="https://redkeyweb.design">Studio home</a>
+      </p>
     </footer>
   </div>
+  <script>
+    const clock = document.getElementById('clock');
+    const tick = () => {
+      const iso = new Date().toISOString();
+      clock.dateTime = iso;
+      clock.textContent = iso.slice(11, 19) + 'Z';
+    };
+    tick();
+    setInterval(tick, 1000);
+  </script>
 </body>
 </html>

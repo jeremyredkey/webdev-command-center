@@ -1,8 +1,9 @@
 # WebDev Command Center v0.5
 
-A Tampermonkey “Swiss army knife” for senior web developers, designers, content teams, and QA reviewers. It runs directly on the page you are reviewing and combines visual inspection, accessibility auditing, California government design review, link checking, responsive comparison, capture, annotations, campaign analysis, and optional AI/web research.
+A Tampermonkey command deck from [Redkey Web Design](https://redkeyweb.design) for senior web developers, designers, content teams, and QA reviewers. It runs directly on the page you are reviewing and combines visual inspection, accessibility auditing, California government design review, link checking, responsive comparison, capture, annotations, campaign analysis, and optional AI/web research.
 
 **Site:** [jeremyredkey.github.io/webdev-command-center](https://jeremyredkey.github.io/webdev-command-center/)  
+**Studio:** [redkeyweb.design](https://redkeyweb.design)  
 **Install:** [Add to Tampermonkey](https://jeremyredkey.github.io/webdev-command-center/webdev-command-center.user.js)
 
 This repository contains the browser userscript and an optional local Node.js bridge. No API keys or private credentials are included.
