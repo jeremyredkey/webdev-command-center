@@ -1,0 +1,6 @@
+.env
+.env.*
+*.key
+webdev-ai-bridge-PERSONAL-KEYED.mjs
+node_modules/
+.DS_Store
