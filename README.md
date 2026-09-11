@@ -3,6 +3,7 @@
 A Tampermonkey command deck from [Redkey Web Design](https://redkeyweb.design) for senior web developers, designers, content teams, and QA reviewers. It runs directly on the page you are reviewing and combines visual inspection, accessibility auditing, California government design review, link checking, responsive comparison, capture, annotations, campaign analysis, and optional AI/web research.
 
 **Site:** [jeremyredkey.github.io/webdev-command-center](https://jeremyredkey.github.io/webdev-command-center/)  
+**Live demo:** [Open the Command Center on a sample page](https://jeremyredkey.github.io/webdev-command-center/demo.html)  
 **Studio:** [redkeyweb.design](https://redkeyweb.design)  
 **Install:** [Add to Tampermonkey](https://jeremyredkey.github.io/webdev-command-center/webdev-command-center.user.js)
 
@@ -189,6 +190,10 @@ The AI and local audit are designed around these source families:
 - Madison Ave. Collective California accessibility checklist (secondary reference)
 
 The AI bridge searches these sources live rather than assuming they never change.
+
+## Try the live demo
+
+Open [demo.html](https://jeremyredkey.github.io/webdev-command-center/demo.html). The Command Center loads on a fictional parks page — no Tampermonkey required. Inspect, run the audit, scan links, and open the Responsive Lab.
 
 ## Install the userscript
 
